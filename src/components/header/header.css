@@ -1,0 +1,51 @@
+.header {
+  padding: 0 16px;
+  height: 56px;
+  display: flex;
+  justify-content: space-between;
+}
+.hamburger, .search, .microphone, .upload, .bell {
+  height: 24px;
+  width: 24px;
+}
+.hamburger, .microphone, .upload, .bell {
+  margin: 16px;
+}
+.menu_cont, .search_cont, .icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.youtube {
+  width: 90px;
+  height: 20px;
+}
+.input {
+  width: 538px;
+  height: 40px;
+  font-size: 16px;
+  outline: none;
+  font-weight: 300;
+  padding: 7px 6px;
+  border: 1px solid var(--grey-border);
+}
+.searchbox {
+  width: 60px;
+  height: 40px;
+  background-color: var(--grey);
+  border: 1px solid var(--grey-border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user {
+  height: 32px;
+  width: 32px;
+  background-color: green;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 8px 16px;
+}

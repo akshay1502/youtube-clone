@@ -3,9 +3,11 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
-  font-family: 'Space Grotesk', sans-serif;
 }
 :root {
   --grey: #f8f8f8;
   --grey-border: #e3e3e3;
+  --text-grey: #606060;
+  --sidebar-hover: #f2f2f2;
+  --sidebar-scrollbar: #909090;
 }

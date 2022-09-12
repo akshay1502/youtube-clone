@@ -11,3 +11,7 @@
   --sidebar-hover: #f2f2f2;
   --sidebar-scrollbar: #909090;
 }
+html { scrollbar-width: none;}
+.main {
+  display:flex;
+}

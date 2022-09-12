@@ -201,7 +201,7 @@ export default function Sidebar() {
 function RenderList({list, title}) {
   const [more, setMore] = useState(false);
   return(
-    <div className='list subscriptions'>
+    <div className='list'>
       {title && <p>{title}</p>}
       { list.visible.map((data, index) => {
         return(

@@ -1,15 +1,12 @@
 .sidebar {
-  width: 240px;
   font-size: 14px;
   height: calc(100vh - 56px);
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: var(--sidebar-scrollbar) white;
+  flex: 0 0 240px;
 }
-.list > div,
-.explore > p,
-.more-from-youtube > p,
-.subscriptions > p {
+.list > div, .list > p {
   height: 40px;
   padding: 0 24px;
   display: flex;
@@ -36,7 +33,7 @@ hr {
   margin: 8px 0;
   border: .5px solid var(--grey-border);
 }
-.explore > p, .more-from-youtube > p, .subscriptions > p {
+.list > p {
   color: var(--text-grey);
   font-weight: 500;
 }

@@ -6,12 +6,8 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   justify-items: center;
-  grid-column-gap: 8px;
+  grid-column-gap: 16px;
   grid-row-gap: 32px;
-}
-.card {
-  width: 250px;
-  margin-bottom: 32px;
 }
 .card > img {
   width: 100%;

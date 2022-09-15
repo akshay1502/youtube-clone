@@ -2,6 +2,7 @@ import moment from 'moment';
 import { useState, useEffect } from 'react';
 import ContentLoader from 'react-content-loader';
 import { CHANNEL, YOUTUBE_FEED } from '../../api';
+import { Link } from 'react-router-dom';
 import './content.css';
 
 export default function Content() {
@@ -18,18 +19,17 @@ export default function Content() {
       }));
       const result = await fetchData.json();
       const addChannelLogoToResult = await Promise.all(result.items.map(async (item) => {
-        item.channelLogo = await fetchChannelLogo(item);
+        item.channelLogo = await fetchChannelLogo(item.snippet.channelId);
         return item;
       }))
-      console.log(addChannelLogoToResult);
       setData(addChannelLogoToResult);
       setLoading(false);
     };
-    async function fetchChannelLogo(item) {
+    async function fetchChannelLogo(channelId) {
       const fetchChannelLogoData = await fetch(CHANNEL + new URLSearchParams({
         key: process.env.REACT_APP_API_KEY,
         part: 'snippet',
-        id: item.snippet.channelId
+        id: channelId
       }));
       const result = await fetchChannelLogoData.json();
       return result.items[0].snippet.thumbnails.default.url;
@@ -60,7 +60,7 @@ export default function Content() {
               } = item;
               const viewCount = Intl.NumberFormat('en', { notation: 'compact' }).format(statistics.viewCount);
               return(
-                <div className='card' key={id}>
+                <Link to={`/watch?v=${id}`} className='card' key={id}>
                   <img src={snippet.thumbnails.high.url} alt={snippet.channelTitle} />
                   <div className='card_desc'>
                     <img src={channelLogo} alt={snippet.channelTitle} />
@@ -70,7 +70,7 @@ export default function Content() {
                       <p className='views'>{viewCount} . {moment(snippet.publishedAt).fromNow()}</p>
                     </div>
                   </div>
-                </div>
+                </Link>
               )
             })}
           </>

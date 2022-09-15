@@ -9,6 +9,9 @@
   grid-column-gap: 16px;
   grid-row-gap: 32px;
 }
+.card {
+  text-decoration: none;
+}
 .card > img {
   width: 100%;
 }
@@ -24,6 +27,7 @@
 }
 .video_desc > .title {
   font-size: 14px;
+  color: black;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;

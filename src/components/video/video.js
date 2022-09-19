@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import ReactPlayer from "react-player";
 import { useSearchParams } from "react-router-dom";
-import { CHANNEL, YOUTUBE_FEED } from "../../api";
+import { CHANNEL, COMMENTS_ON_VIDEO, YOUTUBE_FEED } from "../../api";
+import Linkify from "linkify-react";
+import moment from 'moment';
+import './video.css';
 
 export default function Video() {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [comments, setComments] = useState(null);
+  const [searchParams] = useSearchParams();
+  const [showFullDescription, setShowFullDescription] = useState(false);
   useEffect(() => {
     async function fetchYoutubeFeed() {
       const fetchData = await fetch(YOUTUBE_FEED + new URLSearchParams({
@@ -17,9 +21,7 @@ export default function Video() {
       const { items: [videoData] } = await fetchData.json();
       const fetchingChannelLogo = await fetchChannelLogo(videoData.snippet.channelId);
       videoData.channelLogo = fetchingChannelLogo;
-      console.log(videoData);
       setData(videoData);
-      setLoading(false);
     };
     async function fetchChannelLogo(channelId) {
       const fetchChannelLogoData = await fetch(CHANNEL + new URLSearchParams({
@@ -32,25 +34,89 @@ export default function Video() {
     };
     fetchYoutubeFeed();
   }, []);
+  useEffect(() => {
+    async function fetchCommentsOnVideo() {
+      const fetchComments = await fetch(COMMENTS_ON_VIDEO + new URLSearchParams({
+        key: process.env.REACT_APP_API_KEY,
+        part: 'snippet',
+        videoId: searchParams.get('v')
+      }));
+      const { items } = await fetchComments.json();
+      console.log(items);
+      setComments(items);
+    }
+    fetchCommentsOnVideo();
+  }, []);
   const formatDate = (date) => {
     const tempDate = new Date(date);
     return tempDate.toLocaleDateString('en-GB', {
       day: 'numeric', month: 'short', year: 'numeric'
     });
   };
+  const changeLineClampForDescription = () => {
+    const linkify_desc = document.querySelector('#linkify_desc');
+    linkify_desc.style.webkitLineClamp = showFullDescription ? 5 : 'unset';
+    setShowFullDescription(!showFullDescription);
+  }
   return(
-    <div>
+    <div className="section1">
       <ReactPlayer
         url={`https://www.youtube.com/watch?v=${searchParams.get('v')}`}
-        playing={true}
+        playing={false}
         controls={true}
       />
       {data && (
       <>
-        <p>{data.snippet.title}</p>
-        <p>{data.statistics.viewCount} views . {formatDate(data.snippet.publishedAt)}</p>
+        <div className='video_snippet'>
+          <p className="title">{data.snippet.title}</p>
+          <p className="meta">{Number(data.statistics.viewCount).toLocaleString('en-US')} views . {formatDate(data.snippet.publishedAt)}</p>
+        </div>
+        <hr />
+        <div className="video_desc_container">
+          <img src={data.channelLogo} alt={data.snippet.channelTitle} />
+          <div className="video_desc_meta">
+            <p className="channelTitle">{data.snippet.channelTitle}</p>
+            <Linkify
+              id="linkify_desc"
+              className="description" 
+              tagName="p"
+            >
+              {data.snippet.description}
+            </Linkify>
+            <button onClick={changeLineClampForDescription} className='desc_btn'>
+              SHOW { showFullDescription ? 'LESS' : 'MORE' }
+            </button>
+          </div>
+        </div>
       </>)}
       <hr />
+      {comments && (
+        <>
+          <div className="comment_sort">
+            <span>{comments.length} Comments</span>
+            <button className="sort">
+              <img src='icons/sort.svg' alt='sort' />
+              <span>SORT BY</span>
+            </button>
+          </div>
+          {comments.map(comment => {
+            const { snippet: { topLevelComment } } = comment;
+            const { id, snippet } = topLevelComment;
+            console.log(topLevelComment);
+            return (
+              <div key={id} className="comment">
+                <img src={snippet.authorProfileImageUrl} alt={snippet.authorDisplayName} />
+                <div className="comment_meta">
+                  <p className="author">{snippet.authorDisplayName}</p>
+                  <span>{' '}</span>
+                  <span className="publishedAt">{moment(snippet.publishedAt).fromNow()}</span>
+                  <p dangerouslySetInnerHTML={{ __html: snippet.textDisplay }}></p>
+                </div>
+              </div>
+            )
+          })}
+        </>
+      )}
     </div>
   )
 }

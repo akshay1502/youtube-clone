@@ -1,0 +1,1 @@
+render hashtags and @ using linkify-react.

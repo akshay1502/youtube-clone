@@ -5,7 +5,7 @@ import { CHANNEL, YOUTUBE_FEED } from '../../api';
 import { Link } from 'react-router-dom';
 import './content.css';
 
-export default function Content() {
+export default function YoutubeFeed() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   useEffect(() => {

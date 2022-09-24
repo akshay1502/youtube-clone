@@ -3,6 +3,10 @@
   height: 56px;
   display: flex;
   justify-content: space-between;
+  position: fixed;
+  background-color: white;
+  top: 0;
+  width: 100%;
 }
 .hamburger, .search, .microphone, .upload, .bell {
   height: 24px;

@@ -12,7 +12,7 @@ export default function Video() {
   const [searchParams] = useSearchParams();
   const [showFullDescription, setShowFullDescription] = useState(false);
   useEffect(() => {
-    async function fetchYoutubeFeed() {
+    async function fetchVideo() {
       const fetchData = await fetch(YOUTUBE_FEED + new URLSearchParams({
         key: process.env.REACT_APP_API_KEY,
         part: ['snippet', 'statistics'],
@@ -32,7 +32,7 @@ export default function Video() {
       const result = await fetchChannelLogoData.json();
       return result.items[0].snippet.thumbnails.default.url;
     };
-    fetchYoutubeFeed();
+    fetchVideo();
   }, []);
   useEffect(() => {
     async function fetchCommentsOnVideo() {
@@ -42,7 +42,6 @@ export default function Video() {
         videoId: searchParams.get('v')
       }));
       const { items } = await fetchComments.json();
-      console.log(items);
       setComments(items);
     }
     fetchCommentsOnVideo();
@@ -110,7 +109,7 @@ export default function Video() {
                   <p className="author">{snippet.authorDisplayName}</p>
                   <span>{' '}</span>
                   <span className="publishedAt">{moment(snippet.publishedAt).fromNow()}</span>
-                  <p dangerouslySetInnerHTML={{ __html: snippet.textDisplay }}></p>
+                  <p className="userComment" dangerouslySetInnerHTML={{ __html: snippet.textDisplay }}></p>
                 </div>
               </div>
             )

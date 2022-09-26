@@ -1,9 +1,10 @@
 import moment from 'moment';
 import { useState, useEffect } from 'react';
 import ContentLoader from 'react-content-loader';
-import { CHANNEL, YOUTUBE_FEED } from '../../api';
+import { YOUTUBE_FEED } from '../../api';
 import { Link } from 'react-router-dom';
 import './content.css';
+import fetchChannelLogo from '../../helperfunctions/channelLogo';
 
 export default function YoutubeFeed() {
   const [loading, setLoading] = useState(true);
@@ -24,15 +25,6 @@ export default function YoutubeFeed() {
       }))
       setData(addChannelLogoToResult);
       setLoading(false);
-    };
-    async function fetchChannelLogo(channelId) {
-      const fetchChannelLogoData = await fetch(CHANNEL + new URLSearchParams({
-        key: process.env.REACT_APP_API_KEY,
-        part: 'snippet',
-        id: channelId
-      }));
-      const result = await fetchChannelLogoData.json();
-      return result.items[0].snippet.thumbnails.default.url;
     };
     fetchYoutubeFeed();
   }, []);

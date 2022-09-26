@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import ReactPlayer from "react-player";
 import { useSearchParams } from "react-router-dom";
-import { CHANNEL, COMMENTS_ON_VIDEO, YOUTUBE_FEED } from "../../api";
+import { COMMENTS_ON_VIDEO, YOUTUBE_FEED } from "../../api";
 import Linkify from "linkify-react";
 import moment from 'moment';
 import './video.css';
+import fetchChannelLogo from "../../helperfunctions/channelLogo";
 
 export default function Video() {
   const [data, setData] = useState(null);
@@ -22,15 +23,6 @@ export default function Video() {
       const fetchingChannelLogo = await fetchChannelLogo(videoData.snippet.channelId);
       videoData.channelLogo = fetchingChannelLogo;
       setData(videoData);
-    };
-    async function fetchChannelLogo(channelId) {
-      const fetchChannelLogoData = await fetch(CHANNEL + new URLSearchParams({
-        key: process.env.REACT_APP_API_KEY,
-        part: 'snippet',
-        id: channelId
-      }));
-      const result = await fetchChannelLogoData.json();
-      return result.items[0].snippet.thumbnails.default.url;
     };
     fetchVideo();
   }, []);
@@ -101,7 +93,6 @@ export default function Video() {
           {comments.map(comment => {
             const { snippet: { topLevelComment } } = comment;
             const { id, snippet } = topLevelComment;
-            console.log(topLevelComment);
             return (
               <div key={id} className="comment">
                 <img src={snippet.authorProfileImageUrl} alt={snippet.authorDisplayName} />

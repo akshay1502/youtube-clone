@@ -85,10 +85,10 @@ export default function Video() {
         <>
           <div className="comment_sort">
             <span>{comments.length} Comments</span>
-            <button className="sort">
+            {/* <button className="sort">
               <img src='icons/sort.svg' alt='sort' />
               <span>SORT BY</span>
-            </button>
+            </button> */}
           </div>
           {comments.map(comment => {
             const { snippet: { topLevelComment } } = comment;

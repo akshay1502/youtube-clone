@@ -1,4 +1,9 @@
-.section1 { width: 640px }
+.section1 { 
+  width: 640px;
+  margin-left: 32px;
+  height: calc(100vh - 56px);
+  overflow-y: scroll;
+}
 .video_snippet .title {
   font-weight: 500;
   margin-top: 24px;

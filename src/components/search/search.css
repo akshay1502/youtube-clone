@@ -1,3 +1,10 @@
+.searchContainer {
+  margin-left: 32px;
+  margin-top: 16px;
+  height: calc(100vh - 56px);
+  overflow-y: scroll;
+  width: 100%;
+}
 .search_result_video, .search_result_channel {
   display: flex;
   margin-bottom: 16px;

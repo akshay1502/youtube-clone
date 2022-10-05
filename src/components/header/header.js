@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './header.css';
 
 export default function Header() {
@@ -11,11 +11,24 @@ export default function Header() {
       navigate(`/results?search_query=${searchquery}`);
     }
   }
+  let latch = 1;
+  const closeSidebar = () => {
+    const sidebar = document.getElementsByClassName('sidebar')[0];
+    if (latch) {
+      sidebar.style.display = 'none';
+      latch = 0;
+    } else {
+      sidebar.style.display = 'block';
+      latch = 1;
+    }
+  }
   return(
     <div className="header">
       <div className='menu_cont'>
-        <img src='icons/hamburger.svg' alt='hamburger'  className='hamburger' />
-        <img src='icons/YT-header-icon.svg' alt='youtube' className='youtube' />
+        <img src='icons/hamburger.svg' alt='hamburger'  className='hamburger' onClick={closeSidebar} />
+        <Link to="/">
+          <img src='icons/YT-header-icon.svg' alt='youtube' className='youtube' />
+        </Link>
       </div>
       <div className='search_cont'>
         <input

@@ -25,7 +25,7 @@ export default function Search() {
     searchForQuery();
   }, [search_query]);
   return (
-    <div>
+    <div className="searchContainer">
       {
         result && result.map((item) => {
           const { id, snippet } = item;

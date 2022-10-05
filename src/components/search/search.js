@@ -9,7 +9,6 @@ export default function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [result, setResult] = useState(null);
   const search_query = searchParams.get('search_query');
-  console.log(searchParams);
   useEffect(() => {
     async function searchForQuery() {
       const fetchSearchResults = await fetch( SEARCH + new URLSearchParams({
@@ -19,7 +18,6 @@ export default function Search() {
         q: search_query
       }));
       const { items } = await fetchSearchResults.json();
-      console.log(items);
       setResult(items);
     }
     searchForQuery();

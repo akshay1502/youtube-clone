@@ -7,7 +7,6 @@ export default function Header() {
   const navigate = useNavigate();
   const searchResults = (e) => {
     if (e.key === 'Enter') {
-      console.log('run');
       navigate(`/results?search_query=${searchquery}`);
     }
   }

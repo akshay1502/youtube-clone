@@ -1,5 +1,5 @@
 .section1 { 
-  width: 640px;
+  width: 100%;
   margin-left: 32px;
   height: calc(100vh - 56px);
   overflow-y: scroll;
